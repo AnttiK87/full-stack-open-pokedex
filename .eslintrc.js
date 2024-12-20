@@ -16,7 +16,7 @@ module.exports = {
   plugins: ['react', 'jest'],
   settings: {
     react: {
-      version: 'detect', // Automaattinen React-version tunnistus
+      version: 'detect',
     },
   },
   rules: {
@@ -31,4 +31,9 @@ module.exports = {
     'no-console': 'error',
     'react/prop-types': 0,
   },
+  overrides: [
+    {
+      files: ['*.js', '*.jsx', '*.spec.js', '*.spec.jsx'], // Sisällytä testitiedostot
+    },
+  ],
 }
