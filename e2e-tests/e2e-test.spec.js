@@ -5,7 +5,7 @@ describe('Pokedex', () => {
     await page.goto('/')
   })
   test('front page can be opened', async ({ page }) => {
-    await expect(page.getByText('ivysaur')).toBeVisible()
+    await expect(page.getByText('ibysaur')).toBeVisible()
     await expect(
       page.getByText(
         'Pokémon and Pokémon character names are trademarks of Nintendo.',
@@ -13,7 +13,7 @@ describe('Pokedex', () => {
     ).toBeVisible()
   })
   test('pokemon page can be opened', async ({ page }) => {
-    await expect(page.getByText('ivysau')).toBeVisible()
+    await expect(page.getByText('ivysaur')).toBeVisible()
     await page.getByText('ivysaur').click()
     await expect(page.getByText('chlorophyll')).toBeVisible()
     await expect(page.getByText('overgrow')).toBeVisible()
