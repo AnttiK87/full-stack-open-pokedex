@@ -26,5 +26,5 @@ jobs:
           curl -X POST \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github+json" \
-          https://api.github.com/AnttiK87/full-stack-open-pokedex/dispatches \
+          https://api.github.com/repos/AnttiK87/full-stack-open-pokedex/dispatches \
           -d '{"event_type":"e2e_test_trigger"}'
