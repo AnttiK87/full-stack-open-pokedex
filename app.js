@@ -11,7 +11,13 @@ app.listen(PORT, () => {
 })
 
 app.get('/version', (req, res) => {
-  const version = '1' // change this string to ensure a new version deployed
+  const version = '2' // change this string to ensure a new version deployed
   res.send(version)
   console.log(`current version is ${version}`) // eslint-disable-line no-console
+})
+
+app.get('/health', (req, res) => {
+  // eslint-disable-next-line no-constant-condition
+  if (true) throw 'error...  '
+  res.send('ok')
 })
