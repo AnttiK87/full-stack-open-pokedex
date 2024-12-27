@@ -13,7 +13,7 @@ describe('Pokedex', () => {
     ).toBeVisible()
   })
   test('pokemon page can be opened', async ({ page }) => {
-    await expect(page.getByText('ivysaur')).toBeVisible()
+    await expect(page.getByText('ivysau')).toBeVisible()
     await page.getByText('ivysaur').click()
     await expect(page.getByText('chlorophyll')).toBeVisible()
     await expect(page.getByText('overgrow')).toBeVisible()

@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: '20'
       - name: Install dependencies
         run: npm install
       - name: Check style
@@ -21,3 +21,10 @@ jobs:
         run: npm run build
       - name: test
         run: npm test
+      - name: Trigger e2e-tests
+        run: |
+          curl -X POST \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github+json" \
+          https://api.github.com/AnttiK87/full-stack-open-pokedex.git/dispatches \
+          -d '{"event_type":"e2e_test_trigger"}'
