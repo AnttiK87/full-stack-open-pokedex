@@ -42,11 +42,13 @@ jobs:
           curl "$deploy_url"
 
   discord_notifications:
+    needs: [simple_deployment_pipeline]
+    if: always()
     runs-on: ubuntu-20.04
     steps:
       - name: Test Success
         uses: sarisia/actions-status-discord@v1.15.1
-        if: ${{ github.event_name == 'push' && success() }}
+        if: github.event_name == 'push' && success()
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           nodetail: true
@@ -58,7 +60,7 @@ jobs:
 
       - name: Test Failure
         uses: sarisia/actions-status-discord@v1.15.1
-        if: ${{ failure() }}
+        if: failure()
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           nodetail: true
