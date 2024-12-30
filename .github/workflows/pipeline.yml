@@ -46,7 +46,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Test Success
-        uses: rjstone/discord-webhook-notify@v1.0.4
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: rjstone/discord-webhook-notify@v1.0.2
         if: success()
         with:
           severity: info
@@ -55,10 +57,12 @@ jobs:
           text: A new version of Pokedex deployed.
           description: Tests and Deployment Succeeded!
           details: https://full-stack-open-pokedex-oz9x.onrender.com by ${{ github.actor }} ✅
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          webhookUrl: '$DISCORD_WEBHOOK'
 
       - name: Test Failure
-        uses: rjstone/discord-webhook-notify@v1.0.4
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: rjstone/discord-webhook-notify@v1.0.2
         if: failure()
         with:
           severity: error
@@ -67,7 +71,7 @@ jobs:
           text: Build Failed!.
           description: Tests and Deployment Failed!
           details: Commit [${{ github.event.head_commit.id }}](https://github.com/${{ github.repository }}/commit/${{ github.event.head_commit.id }}) by ${{ github.actor }} broke the build! ❌
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          webhookUrl: '$DISCORD_WEBHOOK'
 
   tag_release:
     needs: [simple_deployment_pipeline]
