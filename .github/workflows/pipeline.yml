@@ -33,7 +33,29 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report/
-          retention-days: 30
+          retention-days: 30                   
+      - name: Test Success 
+          uses: rjstone/discord-webhook-notify@v1.0.4
+          if: ${{ success() }}
+          with:
+            severity: info
+            avatarUrl: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+            username: GitHubActions
+            text: A new version of Pokedex deployed.
+            description: Tests and Deployment Succeeded!
+            details: https://full-stack-open-pokedex-oz9x.onrender.com by ${{ github.actor }} ✅
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Test Failure 
+          uses: rjstone/discord-webhook-notify@v1.0.4
+          if: ${{ failure() }}
+          with:
+            severity: error
+            avatarUrl: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+            username: GitHubActions
+            text: Build Failed!.
+            description: Tests and Deployment Failed!
+            details: Commit [${{ github.event.head_commit.id }}](https://github.com/${{ github.repository }}/commit/${{ github.event.head_commit.id }}) by ${{ github.actor }} broke the build! ❌
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Deploy
         if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
         env:
