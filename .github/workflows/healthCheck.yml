@@ -1,6 +1,9 @@
 name: Regular health check
 
 on:
+  push:
+    branches:
+      - dev
   schedule:
     - cron: '*/5 * * * *'
 
