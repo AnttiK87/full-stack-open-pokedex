@@ -33,35 +33,42 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report/
-          retention-days: 30                   
-      - name: Test Success 
-          uses: rjstone/discord-webhook-notify@v1.0.4
-          if: ${{ success() }}
-          with:
-            severity: info
-            avatarUrl: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
-            username: GitHubActions
-            text: A new version of Pokedex deployed.
-            description: Tests and Deployment Succeeded!
-            details: https://full-stack-open-pokedex-oz9x.onrender.com by ${{ github.actor }} ✅
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-      - name: Test Failure 
-          uses: rjstone/discord-webhook-notify@v1.0.4
-          if: ${{ failure() }}
-          with:
-            severity: error
-            avatarUrl: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
-            username: GitHubActions
-            text: Build Failed!.
-            description: Tests and Deployment Failed!
-            details: Commit [${{ github.event.head_commit.id }}](https://github.com/${{ github.repository }}/commit/${{ github.event.head_commit.id }}) by ${{ github.actor }} broke the build! ❌
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          retention-days: 30
       - name: Deploy
         if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
         env:
           deploy_url: https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
         run: |
           curl "$deploy_url"
+
+  discord_notifications:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Test Success
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: ${{ success() }}
+        with:
+          severity: info
+          avatarUrl: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          username: GitHubActions
+          text: A new version of Pokedex deployed.
+          description: Tests and Deployment Succeeded!
+          details: https://full-stack-open-pokedex-oz9x.onrender.com by ${{ github.actor }} ✅
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
+      - name: Test Failure
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: ${{ failure() }}
+        with:
+          severity: error
+          avatarUrl: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          username: GitHubActions
+          text: Build Failed!.
+          description: Tests and Deployment Failed!
+          details: Commit [${{ github.event.head_commit.id }}](https://github.com/${{ github.repository }}/commit/${{ github.event.head_commit.id }}) by ${{ github.actor }} broke the build! ❌
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
