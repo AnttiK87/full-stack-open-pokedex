@@ -47,7 +47,7 @@ jobs:
     steps:
       - name: Test Success
         uses: rjstone/discord-webhook-notify@v1.0.4
-        if: ${{ success() }}
+        if: success()
         with:
           severity: info
           avatarUrl: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
@@ -59,7 +59,7 @@ jobs:
 
       - name: Test Failure
         uses: rjstone/discord-webhook-notify@v1.0.4
-        if: ${{ failure() }}
+        if: failure()
         with:
           severity: error
           avatarUrl: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
