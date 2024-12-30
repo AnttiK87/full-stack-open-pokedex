@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
 
 jobs:
   hello_world_job:
@@ -14,4 +17,4 @@ jobs:
       - name: Now it is
         run: date
       - name: Directory content
-        run: "ls -l"
+        run: 'ls -l'
