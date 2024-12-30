@@ -57,7 +57,7 @@ jobs:
           WITH_V: false
 
   discord_notifications:
-    needs: [tag_release]
+    needs: [simple_deployment_pipeline, tag_release]
     if: always()
     runs-on: ubuntu-20.04
     steps:
