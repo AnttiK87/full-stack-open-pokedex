@@ -5,7 +5,7 @@ on:
     branches:
       - dev
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/10 * * * *'
 
 jobs:
   scheduled_health_check:
