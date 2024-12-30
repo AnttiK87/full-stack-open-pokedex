@@ -43,6 +43,7 @@ jobs:
 
   discord_notifications:
     needs: [simple_deployment_pipeline]
+    if: always()
     runs-on: ubuntu-20.04
     steps:
       - name: Test Success
