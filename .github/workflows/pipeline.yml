@@ -52,9 +52,9 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           nodetail: true
-          title: ✅ A new version of Pokedex deployed. ✅
+          title: A new version of Pokedex deployed.
 
-          description: Version ${{ github.event.release.tag_name }} by ${{ github.actor }} click [here](https://full-stack-open-pokedex-oz9x.onrender.com)
+          description: To new version ${{ github.event.release.tag_name }} committed by ${{ github.actor }} click [here](https://full-stack-open-pokedex-oz9x.onrender.com)  ✅
           avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
           username: GitHub Actions Bot
           color: #3bb143
@@ -64,9 +64,8 @@ jobs:
         if: needs.simple_deployment_pipeline.result == 'failure'
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          nodetail: true
-          title: ❌ Test failed! ❌
-          description: Commit [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) by ${{ github.actor }} didn't pass all tests!
+          title: Test failed!
+          description: Commit [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) by ${{ github.actor }} didn't pass all tests! ❌
           avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
           username: GitHub Actions Bot
           color: #FF0000
