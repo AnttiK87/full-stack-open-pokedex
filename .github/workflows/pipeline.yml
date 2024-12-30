@@ -52,11 +52,12 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           nodetail: true
-          title: A new version of Pokedex deployed.
-          description: to https://full-stack-open-pokedex-oz9x.onrender.com by ${{ github.actor }} ✅
+          title: ✅ A new version of Pokedex deployed. ✅
+
+          description: Version ${{ github.event.release.tag_name }} by ${{ github.actor }} click [here](${{https://full-stack-open-pokedex-oz9x.onrender.com}})
           avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
           username: GitHub Actions Bot
-          color: #3bb143
+          color: '#3bb143'
 
       - name: Test Failure
         uses: sarisia/actions-status-discord@v1.15.1
@@ -64,11 +65,11 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           nodetail: true
-          title: Build Failed!
-          description: Commit [${{ github.event.head_commit.id }}](https://github.com/${{ github.repository }}/commit/${{ github.event.head_commit.id }}) by ${{ github.actor }} broke the build! ❌
+          title: ❌ Test failed! ❌
+          description: Commit [${{ github.event.head_commit.id }}](${{https://github.com/${{ github.repository }}/commit/${{ github.event.head_commit.id }}}}) by ${{ github.actor }} didn't pass all tests!
           avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
           username: GitHub Actions Bot
-          color: #FF0000
+          color: '#ff1717'
 
   tag_release:
     needs: [simple_deployment_pipeline]
