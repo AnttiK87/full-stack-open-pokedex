@@ -40,6 +40,35 @@ jobs:
           deploy_url: https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
         run: |
           curl "$deploy_url"
+
+  discord_notifications:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Test Success
+        uses: sarisia/actions-status-discord@v1.15.1
+        if: ${{ github.event_name == 'push' && success() }}
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          nodetail: true
+          title: A new version of Pokedex deployed.
+          description: to https://full-stack-open-pokedex-oz9x.onrender.com by ${{ github.actor }} ✅
+          avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          username: GitHub Actions Bot
+          color: #3bb143
+
+      - name: Test Failure
+        uses: sarisia/actions-status-discord@v1.15.1
+        if: ${{ failure() }}
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          nodetail: true
+          title: Build Failed!
+          description: Commit [${{ github.event.head_commit.id }}](https://github.com/${{ github.repository }}/commit/${{ github.event.head_commit.id }}) by ${{ github.actor }} broke the build! ❌
+          avatarUrl: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          username: GitHub Actions Bot
+          color: #FF0000
+
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
